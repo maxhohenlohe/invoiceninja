@@ -944,11 +944,23 @@
                 for (var i=0; i<expenses.length; i++) {
                     var expense = expenses[i];
                     var item = model.invoice().addItem();
-                    item.product_key(expense.expense_category ? expense.expense_category.name : '');
-                    item.notes(expense.public_notes);
+                    
+		    // Replace product key/category with part number of expense
+                    item.product_key(expense.part_number);
+		    
+		    // Original transfer expense catagory to product_key
+		    // item.product_key(expense.expense_category ? expense.expense_category.name : '');
+                    
+		    item.notes(expense.public_notes);
                     item.qty(1);
                     item.expense_public_id(expense.public_id);
-					item.cost(expense.converted_amount);
+		
+		
+		    // Transfer suggestest sell price
+                    item.cost(expense.sug_price);
+                    // Existing code
+                    // item.cost(expense.converted_amount);
+		
                     item.tax_rate1(expense.tax_rate1);
                     item.tax_name1(expense.tax_name1);
                     item.tax_rate2(expense.tax_rate2);
