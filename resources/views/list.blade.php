@@ -40,6 +40,17 @@
 			@endif
 		</select>
 	</span>
+	
+	
+	@if ($entityType == ENTITY_EXPENSE)
+
+	{!! Former::text('tag_invoice')
+		->label(trans('Tag Invoice#'))
+		->addGroupClass('tag_invoice')
+		->data_bind("value: tag_invoice, valueUpdate: 'afterkeydown'") !!}
+	@endif
+	
+	
 </div>
 
 <div id="top_right_buttons" class="pull-right">
