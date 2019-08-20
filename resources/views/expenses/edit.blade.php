@@ -78,6 +78,17 @@
                                 ->data_bind('combobox: client_id')
                                 ->addGroupClass('client-select') !!}
                     @endif
+		    
+		    
+                    {!! Former::text('part_number')->addOption('', '')
+                            ->label(trans('Part#'))
+                            ->addGroupClass('part-number') !!}
+
+
+                    {!! Former::text('sug_price')->addOption('', '')
+                            ->label(trans('Sug. Sell Price'))
+                            ->addGroupClass('sug-price') !!}
+		    
 
                     @include('partials/custom_fields', ['entityType' => ENTITY_EXPENSE])
 
