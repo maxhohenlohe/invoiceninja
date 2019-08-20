@@ -262,11 +262,23 @@ class ExpenseController extends BaseController
                         return redirect($referer)->withError(trans('texts.expense_error_invoiced'));
                     }
                 }
-
+                
+                // Create new invoice with expenses if tag_invoice is null
+                // Add selected expenses to any invoice # in tag_expense text field
+                $variable = Input::get('tag_invoice');
+                
                 if ($action == 'invoice') {
-                    return Redirect::to("invoices/create/{$clientPublicId}")
-                            ->with('expenseCurrencyId', $currencyId)
-                            ->with('expenses', $ids);
+                    if ($variable == '') {
+                        return Redirect::to("invoices/create/{$clientPublicId}")
+                                ->with('expenseCurrencyId', $currencyId)
+                                ->with('expenses', $ids);
+                } else {
+                        return Redirect::to("invoices/{$variable}/edit")
+                                ->with('expenseCurrencyId', $currencyId)
+                                ->with('expenses', $ids);
+                }
+                // End changed code    
+                
                 } else {
                     $invoiceId = Input::get('invoice_id');
 
