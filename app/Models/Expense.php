@@ -54,6 +54,8 @@ class Expense extends EntityModel
         'should_be_invoiced',
         'custom_value1',
         'custom_value2',
+        'part_number',
+        'sug_price',
     ];
 
     public static function getImportColumns()
@@ -69,6 +71,8 @@ class Expense extends EntityModel
             'payment_type',
             'payment_date',
             'transaction_reference',
+            'part_number',
+            'sug_price',            
         ];
     }
 
