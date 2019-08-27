@@ -2341,6 +2341,7 @@ $LANG = array(
     'deleted_recurring_expense' => 'Successfully deleted project',
     'view_recurring_expense' => 'View Recurring Expense',
     'taxes_and_fees' => 'Taxes and fees',
+    'discount_and_fees' => 'Discount / Fees',
     'import_failed' => 'Import Failed',
     'recurring_prefix' => 'Recurring Prefix',
     'options' => 'Options',
