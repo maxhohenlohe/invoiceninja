@@ -974,10 +974,17 @@ class BasePaymentDriver
     {
         $this->input = $input;
         $transRef = array_get($this->input, 'token') ?: $this->invitation->transaction_reference;
+        $items = $this->paymentItems();
 
         if (method_exists($this->gateway(), 'completePurchase')) {
             $details = $this->paymentDetails();
-            $response = $this->gateway()->completePurchase($details)->send();
+            
+            // Original no items included
+            //$response = $this->gateway()->completePurchase($details)->send();
+
+            // Add items to complete transaction
+            $response = $this->gateway()->completePurchase($details)->setItems($items)->send();
+            
             $paymentRef = $response->getTransactionReference() ?: $transRef;
 
             if ($response->isCancelled()) {
