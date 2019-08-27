@@ -88,6 +88,21 @@
                     {!! Former::text('sug_price')->addOption('', '')
                             ->label(trans('Sug. Sell Price'))
                             ->addGroupClass('sug-price') !!}
+			    
+                    @if ($expense && $expense->client_id)
+
+                    {!! Former::checkbox('tag_invoice2')
+                            ->data_bind('checked: tag_invoice2')
+                            ->text(trans('Tag Invoice#'))
+                            ->label(' ')
+                            ->value(1) !!}
+
+                    <div style="display:none" data-bind="visible: tag_invoice2">
+                    {!! Former::text('invoice_id')
+                            ->label(trans('Invoice #'))
+                            ->data_bind("value: invoice_id, valueUpdate: 'afterkeydown'") !!}
+                    </div>
+                    @endif			    
 		    
 
                     @include('partials/custom_fields', ['entityType' => ENTITY_EXPENSE])
@@ -456,6 +471,8 @@
             self.exchange_rate = ko.observable(1);
             self.should_be_invoiced = ko.observable();
             self.apply_taxes = ko.observable({{ ($expense && ($expense->tax_name1 || $expense->tax_name2)) ? 'true' : 'false' }});
+
+            self.tag_invoice2 = ko.observable(); 
 
             @if ($isRecurring)
                 self.frequency_id = ko.observable({{ FREQUENCY_MONTHLY }});
