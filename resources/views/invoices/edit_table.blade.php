@@ -15,8 +15,8 @@
         @if ($account->customLabel('product2'))
             <th style="min-width:120px">{{ $account->present()->customLabel('product2') }}</th>
         @endif
-        <th style="min-width:120px">{{ $invoiceLabels[$isTasks ? 'rate' : 'unit_cost'] }}</th>
         <th style="min-width:120px;display:{{ $account->hasInvoiceField($isTasks ? 'task' : 'product', $isTasks ? 'product.hours' : 'product.quantity') ? 'table-cell' : 'none' }}">{{ $invoiceLabels[$isTasks ? 'hours' : 'quantity'] }}</th>
+        <th style="min-width:120px">{{ $invoiceLabels[$isTasks ? 'rate' : 'unit_cost'] }}</th>
         <th style="min-width:120px;display:{{ $account->hasInvoiceField($isTasks ? 'task' : 'product', 'product.discount') ? 'table-cell' : 'none' }}">{{ $invoiceLabels['discount'] }}</th>
         <th style="min-width:{{ $account->enable_second_tax_rate ? 180 : 120 }}px;display:none;" data-bind="visible: $root.invoice_item_taxes.show">{{ trans('texts.tax') }}</th>
         <th style="min-width:120px;">{{ trans('texts.line_total') }}</th>
@@ -64,14 +64,14 @@
 				])
             </td>
         @endif
-        <td>
-            <input data-bind="value: prettyCost, valueUpdate: 'afterkeydown', attr: {name: 'invoice_items[{{ $isTasks ? 'T' : '' }}' + $index() + '][cost]'}"
-                style="text-align: right" class="form-control invoice-item"/>
-        </td>
         <td style="display:{{ $account->hasInvoiceField($isTasks ? 'task' : 'product', $isTasks ? 'product.hours' : 'product.quantity') ? 'table-cell' : 'none' }}">
             <input data-bind="value: prettyQty, valueUpdate: 'afterkeydown', attr: {name: 'invoice_items[{{ $isTasks ? 'T' : '' }}' + $index() + '][qty]'}"
                 style="text-align: right" class="form-control invoice-item" name="quantity"/>
         </td>
+        <td>
+            <input data-bind="value: prettyCost, valueUpdate: 'afterkeydown', attr: {name: 'invoice_items[{{ $isTasks ? 'T' : '' }}' + $index() + '][cost]'}"
+                style="text-align: right" class="form-control invoice-item"/>
+        </td>	
         <td style="display:{{ $account->hasInvoiceField($isTasks ? 'task' : 'product', 'product.discount') ? 'table-cell' : 'none' }}">
             <input data-bind="value: discount, valueUpdate: 'afterkeydown', attr: {name: 'invoice_items[{{ $isTasks ? 'T' : '' }}' + $index() + '][discount]'}"
                 style="text-align: right" class="form-control invoice-item" name="discount"/>
