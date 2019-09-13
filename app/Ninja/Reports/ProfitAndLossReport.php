@@ -17,6 +17,7 @@ class ProfitAndLossReport extends AbstractReport
             'amount' => [],
             'date' => [],
             'notes' => [],
+            'public_notes' => ['columnSelector-false'],
         ];
     }
 
@@ -77,6 +78,7 @@ class ProfitAndLossReport extends AbstractReport
                 '-' . $expense->present()->amount,
                 $this->isExport ? $expense->expense_date : $expense->present()->expense_date,
                 $expense->present()->category,
+                $expense->public_notes,
             ];
 
             $this->addToTotals($expense->expense_currency_id, 'revenue', 0, $expense->present()->month);
