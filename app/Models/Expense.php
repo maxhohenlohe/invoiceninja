@@ -54,6 +54,7 @@ class Expense extends EntityModel
         'should_be_invoiced',
         'custom_value1',
         'custom_value2',
+        'invoice_id',
         'part_number',
         'sug_price',
     ];
@@ -71,6 +72,7 @@ class Expense extends EntityModel
             'payment_type',
             'payment_date',
             'transaction_reference',
+            'invoice_id',
             'part_number',
             'sug_price',            
         ];
