@@ -987,24 +987,6 @@ class BasePaymentDriver
             
             $paymentRef = $response->getTransactionReference() ?: $transRef;
             
-            
-            // Automatically create an expense for paypal fees
-            $account = $this->account();
-            $invitation = $this->invitation;
-            $invoice = $this->invoice();
-            $expense = Expense::createNew($invitation);
-            $expense->invoice_id = $invoice->id;
-            $expense->invoice_currency_id = $this->client()->getCurrencyId();
-            $expense->expense_currency_id = $this->client()->getCurrencyId();
-            $expense->amount = $response->getFeeReference() ?: '0';
-            $expense->client_id = $invoice->client_id;
-            $expense->expense_date = $account->getDateTime()->format('Y-m-d');
-            $expense->public_notes = 'Paypal Fees';
-            $expense->expense_category_id = '4'; // Change to actual
-            $expense->vendor_id = '5'; // Change to actual
-            $expense->save();            
-            
-
             if ($response->isCancelled()) {
                 return false;
             } elseif (! $response->isSuccessful()) {
@@ -1027,6 +1009,22 @@ class BasePaymentDriver
                 ->first()) {
             throw new Exception(trans('texts.payment_error_code', ['code' => 'DT']));
         }
+        
+        // Automatically create an expense for paypal fees
+        $account = $this->account();
+        $invitation = $this->invitation;
+        $invoice = $this->invoice();
+        $expense = Expense::createNew($invitation);
+        $expense->invoice_id = $invoice->id;
+        $expense->invoice_currency_id = $this->client()->getCurrencyId();
+        $expense->expense_currency_id = $this->client()->getCurrencyId();
+        $expense->amount = $response->getFeeReference() ?: '0';
+        $expense->client_id = $invoice->client_id;
+        $expense->expense_date = $account->getDateTime()->format('Y-m-d');
+        $expense->public_notes = 'Paypal Fees';
+        $expense->expense_category_id = '4'; // Change to actual
+        $expense->vendor_id = '5'; // Change to actual
+        $expense->save();
 
         return $this->createPayment($paymentRef);
     }
