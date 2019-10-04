@@ -69,7 +69,15 @@
                         ->data_date_format(Session::get(SESSION_DATE_PICKER_FORMAT))
                         ->addGroupClass('payment_date')
                         ->append('<i class="glyphicon glyphicon-calendar"></i>') !!}
-			{!! Former::text('transaction_reference') !!}
+			
+            <!–– Add paypal transaction link -->
+            @if ($payment && $payment->payment_type_id == 14 && $payment->transaction_reference) <!-- Change type_id to actual -->
+            {!! Former::text('transaction_reference')
+                ->append('<a href=https://www.paypal.com/activity/payment/' . $payment->transaction_reference . ' target=_blank>Link</a>') !!}
+            @else
+            {!! Former::text('transaction_reference') !!}
+            @endif			
+	
             {!! Former::textarea('private_notes') !!}
 
 
