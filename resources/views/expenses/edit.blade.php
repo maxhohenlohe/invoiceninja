@@ -66,6 +66,27 @@
                                 ->label(trans('texts.date'))
                                 ->append('<i class="glyphicon glyphicon-calendar"></i>') !!}
                     @endif
+		    
+		    
+		    <!–– Add Vendor Transaction link -->
+                    @if ($expense && $expense->vendor_id == 5 && $expense->vendor_inv_number) <!-- Change type_id to actual -->
+
+                    {!! Former::text('vendor_inv_number')->addOption('', '')
+                            ->label(trans('MoTeC INV #'))
+                            ->addGroupClass('vendor_inv_number')
+			                ->append('<a href=https://www.milspecwiring.com/ordertracking.asp?action=view&id=' . $expense->part_number . ' target=_blank>Link</a>') !!}
+                    @elseif ($expense && $expense->vendor_id == 4 && $expense->vendor_inv_number) <!-- Change type_id to actual -->
+
+                    {!! Former::text('vendor_inv_number')->addOption('', '')
+                            ->label(trans('Some Other INV #'))
+                            ->addGroupClass('vendor_inv_number')
+			                ->append('<a href=https://google.com' . $expense->vendor_inv_number . ' target=_blank>Link</a>') !!}
+                    @else
+                        {!! Former::text('vendor_inv_number')->addOption('', '')
+                                ->label(trans('Vendor INV #'))
+                                ->addGroupClass('vendor_inv_number')  !!}
+                    @endif 
+		    
 
                     @if ($expense && $expense->invoice_id)
                         {!! Former::plaintext()
