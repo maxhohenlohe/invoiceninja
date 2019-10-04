@@ -68,24 +68,18 @@
                     @endif
 		    
 		    
-		    <!–– Add Vendor Transaction link -->
-                    @if ($expense && $expense->vendor_id == 5 && $expense->vendor_inv_number) <!-- Change type_id to actual -->
-
-                    {!! Former::text('vendor_inv_number')->addOption('', '')
-                            ->label(trans('MoTeC INV #'))
+                    <!–– Add Vendor Transaction link -->
+                    @if ($expense && $expense->vendor_id == 20 && $expense->vendor_inv_number) <!-- Change type_id to actual -->
+                        {!! Former::text('vendor_inv_number')->addOption('', '')
+                            ->label(trans('MSW INV #'))
                             ->addGroupClass('vendor_inv_number')
-			                ->append('<a href=https://www.milspecwiring.com/ordertracking.asp?action=view&id=' . $expense->part_number . ' target=_blank>Link</a>') !!}
-                    @elseif ($expense && $expense->vendor_id == 4 && $expense->vendor_inv_number) <!-- Change type_id to actual -->
-
-                    {!! Former::text('vendor_inv_number')->addOption('', '')
-                            ->label(trans('Some Other INV #'))
-                            ->addGroupClass('vendor_inv_number')
-			                ->append('<a href=https://google.com' . $expense->vendor_inv_number . ' target=_blank>Link</a>') !!}
+                            ->append('<a href=https://www.milspecwiring.com/myaccount.asp target=_blank>Link</a>') !!}
                     @else
                         {!! Former::text('vendor_inv_number')->addOption('', '')
-                                ->label(trans('Vendor INV #'))
-                                ->addGroupClass('vendor_inv_number')  !!}
-                    @endif 
+                            ->label(trans('' . $expense->vendor->present()->name . ' INV #'))
+                            ->addGroupClass('vendor_inv_number')
+                            ->append('<a href=https://gmail.com target=_blank>Link</a>') !!}
+                    @endif
 		    
 
                     @if ($expense && $expense->invoice_id)
