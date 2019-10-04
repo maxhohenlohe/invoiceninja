@@ -57,6 +57,7 @@ class Expense extends EntityModel
         'invoice_id',
         'part_number',
         'sug_price',
+        'vendor_inv_number',
     ];
 
     public static function getImportColumns()
@@ -74,7 +75,8 @@ class Expense extends EntityModel
             'transaction_reference',
             'invoice_id',
             'part_number',
-            'sug_price',            
+            'sug_price',
+            'vendor_inv_number',
         ];
     }
 
