@@ -70,15 +70,22 @@
 		    
                     <!–– Add Vendor Transaction link -->
                     @if ($expense && $expense->vendor_id == 20 && $expense->vendor_inv_number) <!-- Change type_id to actual -->
-                        {!! Former::text('vendor_inv_number')->addOption('', '')
-                            ->label(trans('MSW INV #'))
-                            ->addGroupClass('vendor_inv_number')
-                            ->append('<a href=https://www.milspecwiring.com/myaccount.asp target=_blank>Link</a>') !!}
+                    {!! Former::text('vendor_inv_number')->addOption('', '')
+                        ->label(trans('MSW INV #'))
+                        ->addGroupClass('vendor_inv_number')
+                        ->append('<a href=https://www.milspecwiring.com/myaccount.asp target=_blank>Link</a>') !!}
                     @else
+                        @if ($expense && $expense->vendor_id)
                         {!! Former::text('vendor_inv_number')->addOption('', '')
                             ->label(trans('' . $expense->vendor->present()->name . ' INV #'))
                             ->addGroupClass('vendor_inv_number')
                             ->append('<a href=https://gmail.com target=_blank>Link</a>') !!}
+                        @else
+                        {!! Former::text('vendor_inv_number')->addOption('', '')
+                            ->label(trans('INV #'))
+                            ->addGroupClass('vendor_inv_number')
+                            ->append('<a href=https://gmail.com target=_blank>Link</a>') !!}
+                        @endif
                     @endif
 		    
 
