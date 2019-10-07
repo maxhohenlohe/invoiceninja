@@ -6,6 +6,7 @@ use App\Models\Account;
 use App\Models\AccountGatewaySettings;
 use App\Models\AccountGatewayToken;
 use App\Models\Country;
+use App\Models\Expense;
 use App\Models\GatewayType;
 use App\Models\License;
 use App\Models\Payment;
