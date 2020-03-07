@@ -3,6 +3,7 @@
 namespace App\Ninja\Datatables;
 
 use App\Models\Expense;
+use App\Models\Document;
 use Auth;
 use URL;
 use Utils;
