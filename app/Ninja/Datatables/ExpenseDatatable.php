@@ -93,6 +93,12 @@ class ExpenseDatatable extends EntityDatatable
                     return self::getStatusLabel($model->invoice_id, $model->should_be_invoiced, $model->balance, $model->payment_date);
                 },
             ],
+            [
+                'documents_uploaded',
+                function ($model) {
+                    return Document::where('expense_id', $model->id)->count();
+                },
+            ],            
         ];
     }
 
