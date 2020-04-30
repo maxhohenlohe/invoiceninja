@@ -61,7 +61,7 @@ class ExpenseReport extends AbstractReport
         }
 
         $expenses = Expense::scope()
-                        ->orderBy('expense_date', 'desc')
+                        ->orderBy('expense_date', 'asc')
                         ->withArchived()
                         ->with('client.contacts', 'vendor', 'expense_category', 'user')
                         ->where('expense_date', '>=', $this->startDate)
