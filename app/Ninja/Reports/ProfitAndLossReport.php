@@ -27,7 +27,7 @@ class ProfitAndLossReport extends AbstractReport
         $subgroup = $this->options['subgroup'];
 
         $payments = Payment::scope()
-                        ->orderBy('payment_date', 'desc')
+                        ->orderBy('payment_date', 'asc')
                         ->with('client.contacts', 'invoice', 'user')
                         ->withArchived()
                         ->excludeFailed()
@@ -62,7 +62,7 @@ class ProfitAndLossReport extends AbstractReport
         }
 
         $expenses = Expense::scope()
-                        ->orderBy('expense_date', 'desc')
+                        ->orderBy('expense_date', 'asc')
                         ->with('client.contacts', 'vendor')
                         ->withArchived()
                         ->where('expense_date', '>=', $this->startDate)
