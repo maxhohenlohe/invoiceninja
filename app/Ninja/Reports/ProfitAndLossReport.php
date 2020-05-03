@@ -4,6 +4,7 @@ namespace App\Ninja\Reports;
 
 use App\Models\Expense;
 use App\Models\Payment;
+use App\Models\Invoice;
 use Auth;
 
 class ProfitAndLossReport extends AbstractReport
@@ -18,6 +19,7 @@ class ProfitAndLossReport extends AbstractReport
             'date' => [],
             'notes' => [],
             'public_notes' => ['columnSelector-false'],
+            "invoice",            
         ];
     }
 
@@ -42,11 +44,13 @@ class ProfitAndLossReport extends AbstractReport
             }
             $this->data[] = [
                 trans('texts.payment'),
+                $this->isExport ? $payment->payment_date : $payment->present()->payment_date,                
                 $client ? ($this->isExport ? $client->getDisplayName() : $client->present()->link) : '',
                 '',
                 $account->formatMoney($payment->getCompletedAmount(), $client),
-                $this->isExport ? $payment->payment_date : $payment->present()->payment_date,
                 $payment->present()->method,
+                '',
+                $payment->invoice->present()->invoice_number,
             ];
 
             $this->addToTotals($client->currency_id, 'revenue', $payment->getCompletedAmount(), $payment->present()->month);
@@ -71,14 +75,16 @@ class ProfitAndLossReport extends AbstractReport
         foreach ($expenses->get() as $expense) {
             $client = $expense->client;
             $vendor = $expense->vendor;
+            $invoice_number = Invoice::where('id', $expense->invoice_id)->value('invoice_number');
             $this->data[] = [
                 trans('texts.expense'),
+                $this->isExport ? $expense->expense_date : $expense->present()->expense_date,
                 $client ? ($this->isExport ? $client->getDisplayName() : $client->present()->link) : '',
                 $vendor ? ($this->isExport ? $vendor->name : $vendor->present()->link) : '',
                 '-' . $expense->present()->amount,
-                $this->isExport ? $expense->expense_date : $expense->present()->expense_date,
                 $expense->present()->category,
                 $expense->public_notes,
+                $invoice_number,
             ];
 
             $this->addToTotals($expense->expense_currency_id, 'revenue', 0, $expense->present()->month);
