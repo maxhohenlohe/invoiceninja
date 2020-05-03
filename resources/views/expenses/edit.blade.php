@@ -67,6 +67,29 @@
                                 ->append('<i class="glyphicon glyphicon-calendar"></i>') !!}
                     @endif
 
+
+
+                    <!–– Add Vendor Transaction link -->
+                    @if ($expense && $expense->vendor_id == 20 && $expense->vendor_inv_number) <!-- Change type_id to actual -->
+                    {!! Former::text('vendor_inv_number')->addOption('', '')
+                        ->label(trans('MSW INV #'))
+                        ->addGroupClass('vendor_inv_number')
+                        ->append('<a href=https://www.milspecwiring.com/myaccount.asp target=_blank>Link</a>') !!}
+                    @else
+                        @if ($expense && $expense->vendor_id)
+                        {!! Former::text('vendor_inv_number')->addOption('', '')
+                            ->label(trans('' . $expense->vendor->present()->name . ' INV #'))
+                            ->addGroupClass('vendor_inv_number')
+                            ->append('<a href=https://gmail.com target=_blank>Link</a>') !!}
+                        @else
+                        {!! Former::text('vendor_inv_number')->addOption('', '')
+                            ->label(trans('Vendor INV #'))
+                            ->addGroupClass('vendor_inv_number')
+                            ->append('<a href=https://gmail.com target=_blank>Link</a>') !!}
+                        @endif
+                    @endif
+		    
+		    
                     @if ($expense && $expense->invoice_id)
                         {!! Former::plaintext()
                                 ->label('client')
@@ -78,6 +101,47 @@
                                 ->data_bind('combobox: client_id')
                                 ->addGroupClass('client-select') !!}
                     @endif
+
+
+
+                    {!! Former::text('part_number')->addOption('', '')
+                            ->label(trans('Part#'))
+                            ->addGroupClass('part-number') !!}
+
+
+                    @if ($expense && $expense->client_id && !$expense->invoice_id)
+
+                        {!! Former::checkbox('tag_invoice2')
+                                ->data_bind('checked: tag_invoice2')
+                                ->text(trans($expense->functionName($expense->invoice_id)))
+                                ->label(' ')
+                                ->value(1) !!}
+
+                        <div style="display:none" data-bind="visible: tag_invoice2">
+                            {!! Former::text('invoice_id')
+                                    ->label(trans('Invoice ID'))
+                                    ->data_bind("value: invoice_id, valueUpdate: 'afterkeydown'") !!}
+                        </div>
+                    @endif
+
+
+
+                    @if ($expense && $expense->client_id && $expense->invoice_id)
+
+                        {!! Former::checkbox('tag_invoice2')
+                                ->data_bind('checked: tag_invoice2')
+                                ->text(trans($expense->functionName($expense->invoice_id)))
+                                ->label(' ')
+                                ->value(1)
+                                ->append('<a href=/invoices/' . $expense->invoice_id . '/edit target=_blank>Link</a>') !!}
+
+                        <div style="display:none" data-bind="visible: tag_invoice2">
+                            {!! Former::text('invoice_id')
+                                    ->label(trans('Invoice ID'))
+                                    ->data_bind("value: invoice_id, valueUpdate: 'afterkeydown'") !!}
+                        </div>
+                    @endif
+
 
                     @include('partials/custom_fields', ['entityType' => ENTITY_EXPENSE])
 
