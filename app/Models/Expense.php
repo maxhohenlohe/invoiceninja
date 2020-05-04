@@ -7,6 +7,7 @@ use App\Events\ExpenseWasUpdated;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laracasts\Presenter\PresentableTrait;
 use Utils;
+use App\Models\Invoice;
 
 /**
  * Class Expense.
@@ -345,6 +346,14 @@ class Expense extends EntityModel
 
         return static::calcStatusLabel($this->should_be_invoiced, $this->invoice_id, $balance, $this->payment_date);
     }
+    public static function expenseInvNumber($args) {
+        //return Invoice::where('id', $expense->invoice_id)->value('invoice_number');
+        //return Invoice::where('id', $expense->invoice_id)->value('invoice_number');
+       // return Invoice::where('id', $fire)->value('invoice_number');
+        $invoicenumber = Invoice::where('id', $args)->value('invoice_number');
+        return "Tag Invoice | Currently INV# $invoicenumber";
+
+    }    
 }
 
 Expense::creating(function ($expense) {
